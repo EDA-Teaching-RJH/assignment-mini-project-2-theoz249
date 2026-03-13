@@ -1,5 +1,6 @@
 import random
 import string
-chars= string.ascii_letters+string.punctuation+string.digits+" "
-chars= list(chars)
+chars= string.ascii_letters+string.punctuation+string.digits+" "+"\t"
+chars = list(chars)
+
 
