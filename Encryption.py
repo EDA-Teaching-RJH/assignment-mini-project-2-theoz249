@@ -7,3 +7,10 @@ def getKey():
     key = chars.copy()
     random.shuffle(key)
     return key
+
+def encrypt(text,key):
+    cipher_text = ""
+    for letter in text:
+        index = chars.index(letter)
+        cipher_text += key[index]
+    return cipher_text

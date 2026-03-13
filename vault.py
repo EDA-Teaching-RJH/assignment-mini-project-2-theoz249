@@ -13,3 +13,7 @@ except FileNotFoundError:
 except IOError:
     print("Could not access or create the file.")
     pass
+
+username = ""
+password = ""
+personalkey = ""
