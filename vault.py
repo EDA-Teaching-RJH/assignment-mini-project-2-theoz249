@@ -1,4 +1,4 @@
-import Encryption
+import encryption
 import csv 
 
 
@@ -17,3 +17,11 @@ except IOError:
 username = ""
 password = ""
 personalkey = ""
+
+def newUser():
+    personalkey = encryption.getKey()
+    username = input(":")
+    password = input(":")
+    password = encryption.encrypt(password,personalkey)
+    with open("login.txt", "a") as f:
+         f.write(f"{username},{password},{personalkey}\n")
