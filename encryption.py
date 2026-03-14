@@ -6,6 +6,7 @@ chars = list(chars)
 def getKey():
     key = chars.copy()
     random.shuffle(key)
+    key = "".join(key)
     return key
 
 def encrypt(text,key):

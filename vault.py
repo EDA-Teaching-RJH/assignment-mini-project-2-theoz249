@@ -18,36 +18,34 @@ username = ""
 password = ""
 personalkey = ""
 
-def newUser():
+def newUser(username,password):
     personalkey = encryption.getKey()
-    username = input(":")
-    password = input(":")
     password = encryption.encrypt(password,personalkey)
-    with open("login.txt", "a") as f:
+    with open("loggin.txt", "a") as f:
          f.write(f"{username},{password},{personalkey}\n")
 
 
 
-def logUser():
-    logIn = False
-    username = input(":")
-    password = input(":")
-    with open("loggin.txt", "r") as f:
-        reader = csv.reader(f)
-        for row in reader:
-            stored_username,stored_password,key = row
-            if stored_username == username:
-                decrypted_password = encryption.decrypt(stored_password,key)
-                if decrypted_password == password:
-                    print("logged in")
-                    logIn = True 
-                    return logIn
-                else:
-                    print("incorrect password")
-                    return logIn
-            else:
-                print("username doesn't match")
-                return logIn
+def logUser(username, password):
+    try:
+        with open("loggin.txt", "r") as f:
+            reader = csv.reader(f,delimiter="Δ")
+
+            for row in reader:
+                stored_username,stored_password,*key = row
+                if stored_username == username:
+                    decrypted_password = encryption.decrypt(stored_password, key)
+                    if decrypted_password == password:
+                        print("logged in")
+                        return True
+                    else:
+                        print("incorrect password")
+                        return False
+            print("username doesn't match")
+            return False
+    except FileNotFoundError:
+        print("Error: loggin.txt not found.")
+        return False    
 
 def userkey(search_username):
     with open("loggin.txt", "r") as f:
