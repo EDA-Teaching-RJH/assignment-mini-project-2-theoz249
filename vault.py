@@ -57,6 +57,22 @@ def userkey(search_username):
             if username == search_username:
                 return key
 
-
+display = ("1.login\n2.signin\n3.exit")
 def main():
-    
+    while True : 
+        print(display)
+        user_choice = input(":")
+        if user_choice == "1" :
+            username = input("what is your username? :")
+            password = input("what is your password? :")
+            logUser(username,password)
+            if logUser(username,password) == True :
+                pass
+            else:
+                pass     
+        elif user_choice == "2":
+            username = input("what is your username? :")
+            password = input("what is your password? :")
+            newUser(username,password)
+        elif user_choice == "3":
+            break
