@@ -48,3 +48,15 @@ def logUser():
             else:
                 print("username doesn't match")
                 return logIn
+
+def userkey(search_username):
+    with open("loggin.txt", "r") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            username, password, key = row
+            if username == search_username:
+                return key
+
+
+def main():
+    
