@@ -68,7 +68,17 @@ def manage_vault(username, key):
         with open(filename,"w") as f:
             pass
         encrypted_items = []
-
+    while True:
+        print(f"\n--- {username.uper()}'S VAULT ---")
+        print(f"Total secrets: {len(encrypted_items)}")
+        choice = input("1. Add secret\n2. View/Remove Secrets\n3. Logout\n: ")
+        if choice == "1":
+            secret = input("Enter secret to store: ")
+            enc_secret = encryption.encrypt(secret, key)
+            encrypted_items.append(enc_secret)
+            with open(filename, "w") as f:
+                json.dump(encrypted_items, f)
+            print("Secret encrypted and added.")
 
 def userKey(search_username):
     with open("loggin.json", "r") as f:
