@@ -6,3 +6,8 @@ class testvault(unittest.TestCase):
         self.assertFalse(passwordCheck("helloworld"))
     def test_strongP(self):
         self.assertTrue(passwordCheck("He11owwor!d"))
+    def test_short_password(self):
+        self.assertFalse(passwordCheck("Ab1!"))
+
+if __name__ == "__main__":
+    unittest.main()
