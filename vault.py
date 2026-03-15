@@ -1,6 +1,7 @@
 import encryption
 import csv 
 import re
+import string
 
 try:
     with open("login.txt", "r") as f:
@@ -29,7 +30,7 @@ def newUser(username,password):
 def logUser(username, password):
     try:
         with open("loggin.txt", "r") as f:
-            reader = csv.reader(f,delimiter="Δ")
+            reader = csv.reader(f)
 
             for row in reader:
                 stored_username,stored_password,*key = row
@@ -46,6 +47,14 @@ def logUser(username, password):
     except FileNotFoundError:
         print("Error: loggin.txt not found.")
         return False    
+
+def passwordCheck(password):
+    special_chars = re.escape(string.punctuation)
+    pattern = rf"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[{special_chars}]).{{8,}}$"
+    if re.match(pattern,password):
+        return True
+    else:
+        return False
 
 def userkey(search_username):
     with open("loggin.txt", "r") as f:
@@ -71,6 +80,7 @@ def main():
         elif user_choice == "2":
             username = input("what is your username? :")
             password = input("what is your password? :")
+            passwordCheck(password)
             newUser(username,password)
         elif user_choice == "3":
             break
