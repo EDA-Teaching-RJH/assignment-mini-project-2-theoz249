@@ -71,19 +71,24 @@ display = ("1.login\n2.signin\n3.exit")
 def main():
     while True : 
         print(display)
-        user_choice = input(":")
+        user_choice = input("action? :")
         if user_choice == "1" :
             username = input("what is your username? :")
             password = input("what is your password? :")
-            logUser(username,password)
-            if logUser(username,password) == True :
+            if logUser(username,password):
                 pass
             else:
                 pass     
         elif user_choice == "2":
             username = input("what is your username? :")
-            password = input("what is your password? :")
-            passwordCheck(password)
-            newUser(username,password)
+            while True :
+                password = input("what is your password? :")
+                if passwordCheck(password):
+                    print("password is strong")
+                    newUser(username,password)
+                    break
+                else :
+                    print("password not strong enough!\nMust contain: 8+ chars, 1 upper, 1 lower, 1 digit, 1 symbol")
         elif user_choice == "3":
+            print("goodbye!")
             break
