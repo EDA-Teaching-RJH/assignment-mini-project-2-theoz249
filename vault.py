@@ -59,6 +59,17 @@ def passwordCheck(password):
     else:
         return False
 
+def manage_vault(username, key):
+    filename = f"vault_{username}.json"
+    try:
+        with open(filename, "r") as f:
+            encrypted_items = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        with open(filename,"w") as f:
+            pass
+        encrypted_items = []
+
+
 def userKey(search_username):
     with open("loggin.json", "r") as f:
         for line in f:
