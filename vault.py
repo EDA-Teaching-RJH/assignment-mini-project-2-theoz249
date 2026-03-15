@@ -121,9 +121,11 @@ def main():
             username = input("what is your username? :")
             password = input("what is your password? :")
             if logUser(username,password):
-                pass
+                ukey = userKey(username)
+                if ukey:
+                    manage_vault(username, ukey)
             else:
-                pass     
+                print("unable to log in")
         elif user_choice == "2":
             username = input("what is your username? :")
             while True :
@@ -137,3 +139,5 @@ def main():
         elif user_choice == "3":
             print("goodbye!")
             break
+
+main()
