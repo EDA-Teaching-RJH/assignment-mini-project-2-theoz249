@@ -79,6 +79,30 @@ def manage_vault(username, key):
             with open(filename, "w") as f:
                 json.dump(encrypted_items, f)
             print("Secret encrypted and added.")
+        elif choice == "2":
+            if not encrypted_items:
+                print("Vault is empty.")
+                continue
+            print("\n--- Your Secrets ---")
+            for i, enc_val in enumerate(encrypted_items):
+                decrypted = encryption.decrypt(enc_val,key)
+                print(f"{i+1}.{decrypted}")
+            rem = input("\nRemove # (or 'b' to go back): ")
+            if rem.lower() == "b":
+                continue
+            elif rem.isdigit():
+                idx = int(rem) - 1
+                if 0 <= idx < len(encrypted_items):
+                    encrypted_items.pop(idx)
+                    with open(filename, "w") as f:
+                        json.dump(encrypted_items, f)
+                    print(f"Successfully removed item #{rem}")
+                else:
+                    print("Invalid number. No item removed.")
+        elif choice == "3":
+            print("Vault saved and locked.")
+            break
+
 
 def userKey(search_username):
     with open("loggin.json", "r") as f:
