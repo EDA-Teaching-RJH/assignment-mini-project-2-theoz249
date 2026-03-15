@@ -1,16 +1,15 @@
 import encryption
-import csv 
+import json
 import re
 import string
 
 try:
-    with open("login.txt", "r") as f:
+    with open("loggin.json", "r") as f:
         print("File exists and is readable.")
 except FileNotFoundError:
-    print("File does not exist.")
-    with open("login.txt", "w") as f:  
-        f.write("username,password,key\n")   
-    print("File is now confirmed to exist (or was just created).")
+    with open("loggin.json", "w") as f:  
+        pass
+    print("file created")
 except IOError:
     print("Could not access or create the file.")
     pass
@@ -21,21 +20,25 @@ personalkey = ""
 
 def newUser(username,password):
     personalkey = encryption.getKey()
-    password = encryption.encrypt(password,personalkey)
-    with open("loggin.txt", "a") as f:
-         f.write(f"{username},{password},{personalkey}\n")
+    password = encryption.encrypt(password, personalkey)
+    user_data = {
+        "username": username,
+        "password": password,
+        "key": personalkey
+    }
+    with open("loggin.json", "a", newline = '') as f:
+        f.write(json.dumps(user_data) + "\n")
+    print("Account created successfully!")
 
 
 
 def logUser(username, password):
     try:
-        with open("loggin.txt", "r") as f:
-            reader = csv.reader(f)
-
-            for row in reader:
-                stored_username,stored_password,*key = row
-                if stored_username == username:
-                    decrypted_password = encryption.decrypt(stored_password, key)
+        with open("loggin.json", "r") as f:
+            for line in f:
+                user = json.loads(line)
+                if user["username"] == username:
+                    decrypted_password = encryption.decrypt(user["password"], user["key"])
                     if decrypted_password == password:
                         print("logged in")
                         return True
@@ -46,7 +49,7 @@ def logUser(username, password):
             return False
     except FileNotFoundError:
         print("Error: loggin.txt not found.")
-        return False    
+        return False
 
 def passwordCheck(password):
     special_chars = re.escape(string.punctuation)
@@ -56,13 +59,13 @@ def passwordCheck(password):
     else:
         return False
 
-def userkey(search_username):
-    with open("loggin.txt", "r") as f:
-        reader = csv.reader(f)
-        for row in reader:
-            username, password, key = row
-            if username == search_username:
-                return key
+def userKey(search_username):
+    with open("loggin.json", "r") as f:
+        for line in f:
+            user = json.loads(line.strip())
+            if user["username"] == search_username:
+                return user["key"]
+    return None             
 
 display = ("1.login\n2.signin\n3.exit")
 def main():
