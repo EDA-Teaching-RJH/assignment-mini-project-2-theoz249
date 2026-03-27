@@ -75,7 +75,7 @@ def manage_vault(username, key):#this funtion is the vault system
             pass
         encrypted_items = []
     while True:
-        print(f"\n--- {username.uper()}'S VAULT ---")
+        print(f"\n--- {username.upper()}'S VAULT ---")
         print(f"Total secrets: {len(encrypted_items)}")
         choice = input("1. Add secret\n2. View/Remove Secrets\n3. Logout\n: ")# asks the user for an option
         if choice == "1":
